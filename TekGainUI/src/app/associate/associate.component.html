@@ -1,0 +1,211 @@
+<mat-toolbar class="bar">
+  <span>TekGain</span>
+  <div class="signoutb">
+    <button mat-raised-button color="#000000" (click)="logout()">Signout</button>
+  </div>
+</mat-toolbar>
+<mat-toolbar class="toolbar">
+  <div class="d-grid gap-2 d-md-flex justify-content-end  btn-text-light ">
+    <a routerLink="/course" mat-raised-button class="btn btn-light" type="button" float="right">Course</a>
+    <a routerLink="/admission" mat-raised-button class="btn btn-light" type="button" float="right">Admission</a>
+    <a routerLink="/associate" mat-raised-button class="btn btn-light" type="button" float="right">Associate</a>
+  </div>
+</mat-toolbar>
+<mat-sidenav-container>
+    <mat-sidenav opened class="navlist" mode="side">
+        <mat-nav-list>
+            <a *ngIf="this.add" [routerLink]="['/associate']" [queryParams]="{paramFlag:1}" mat-list-item>Add Associate</a>
+            <a *ngIf="this.update" [routerLink]="['/associate']" [queryParams]="{paramFlag:2}"mat-list-item>Update Associate</a>
+            <a *ngIf="this.view" [routerLink]="['/associate']" [queryParams]="{paramFlag:3}"mat-list-item>Show Associate By Id</a>
+            <a *ngIf="this.show" [routerLink]="['/associate']" [queryParams]="{paramFlag:4}"mat-list-item>View All Associate</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-card>
+            <h1 style="color: white;">Associate Management</h1>
+            <mat-card-content>
+                <div *ngIf="paramFlag===1">
+                  <form #myForm="ngForm" class="content">
+                    <h2>Add Associate Details</h2>
+                      <mat-form-field color="accent" appearance = "fill">  
+                        <mat-label>Associate Name </mat-label>  
+                        <input
+                          type="text"
+                          id="associateName"
+                          name="associateName"
+                          value="associateName"
+                          [(ngModel)]="associateName"
+                          required
+                          pattern="[A-Za-z\s]+"
+                          #associatename="ngModel"
+                          [ngClass]="{'is-invalid': associatename.touched && associatename.errors}"
+                          matInput
+                        />
+                        <small *ngIf="associatename.touched && associatename.errors && associatename.errors['required']" class="text-accent">
+                          *Associate Name is required
+                        </small>
+                        <small *ngIf="associatename.touched && associatename.errors?.pattern" class="text-accent">
+                          *Associate Name must contain only letters (no digits or special characters allowed)
+                        </small>
+                      </mat-form-field>
+                      <mat-form-field color="accent" appearance = "fill">  
+                        <mat-label>Email Id</mat-label>  
+                        <input
+                          type="text"
+                          id="associateEmailId"
+                          name="associateEmailId"
+                          value="associateEmailId"
+                          [(ngModel)]="associateEmailId"
+                          required
+                          pattern="[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                          #associateEmail="ngModel"
+                          [ngClass]="{'is-invalid': associateEmail.touched && associateEmail.errors}"
+                          matInput
+                        />
+                        <small *ngIf="associateEmail.touched && associateEmail.errors && associateEmail.errors['required']" class="text-accent">
+                          *Associate Email Id is required
+                        </small>
+                        <small *ngIf="associateEmail.touched && associateEmail.errors?.pattern" class="text-accent">
+                          *Please enter a valid email address
+                        </small>
+                      </mat-form-field> 
+                      <mat-form-field color="accent" appearance = "fill">  
+                        <mat-label>Associate Address </mat-label>  
+                        <input
+                          type="text"
+                          id="associateAddress"
+                          name="associateAddress"
+                          value="associateAddress"
+                          [(ngModel)]="associateAddress"
+                          required
+                          #AssociateAddress="ngModel"
+                          [ngClass]="{'is-invalid': AssociateAddress.touched && AssociateAddress.errors}"
+                          matInput
+                        />
+                        <small *ngIf="AssociateAddress.touched && AssociateAddress.errors && AssociateAddress.errors['required']" class="text-accent">
+                          *Associate Address is required
+                        </small>
+                      </mat-form-field>
+                    <button type="submit" [disabled]="!myForm.valid" (click)="addAssociate()" mat-raised-button>Add Associate</button>
+                  </form>
+                 </div> 
+                 <div *ngIf="paramFlag===2" class="content">
+                  <form #myForm="ngForm" class="content">
+                    <h2>Update Associate Details</h2>
+                     <mat-form-field color="accent" appearance = "fill">  
+                        <mat-label>Associate Id </mat-label>  
+                        <input
+                          type="text"
+                          id="associateId"
+                          name="associateId"
+                          value="associateId"
+                          [(ngModel)]="associateId"
+                          required
+                          #AssociateId="ngModel"
+                          [ngClass]="{'is-invalid': AssociateId.touched && AssociateId.errors}"
+                          matInput
+                        />
+                        <small *ngIf="AssociateId.touched && AssociateId.errors && AssociateId.errors['required']" class="text-accent">
+                          *Associate Id is required
+                        </small>
+                    </mat-form-field>
+                        <mat-form-field color="accent" appearance = "fill">  
+                            <mat-label>Associate Address </mat-label>  
+                            <input
+                          type="text"
+                          id="associateAddress"
+                          name="associateAddress"
+                          value="associateAddress"
+                          [(ngModel)]="associateAddress"
+                          required
+                          #AssociateAddress="ngModel"
+                          [ngClass]="{'is-invalid': AssociateAddress.touched && AssociateAddress.errors}"
+                          matInput
+                        />
+                        <small *ngIf="AssociateAddress.touched && AssociateAddress.errors && AssociateAddress.errors['required']" class="text-accent">
+                          *Associate Address is required
+                        </small>  
+                      </mat-form-field>
+                      <button type="submit" [disabled]="!myForm.valid" (click)="updateCourse()" mat-raised-button>Update Course</button>
+                      <h2 *ngIf="message!=''">{{message}}</h2>
+                    </form>
+                 </div>
+                 <div *ngIf="paramFlag===3" class="content">
+                  <form #myForm="ngForm" class="content">
+                    <h2>View Associate Details by Id</h2>
+                     <mat-form-field color="accent" appearance = "fill">  
+                        <mat-label>Associate Id </mat-label>  
+                        <input
+                          type="text"
+                          id="associateId"
+                          name="associateId"
+                          value="associateId"
+                          [(ngModel)]="associateId"
+                          required
+                          #AssociateId="ngModel"
+                          [ngClass]="{'is-invalid': AssociateId.touched && AssociateId.errors}"
+                          matInput
+                        />
+                        <small *ngIf="AssociateId.touched && AssociateId.errors && AssociateId.errors['required']" class="text-accent">
+                          *Associate Id is required
+                        </small>  
+                      </mat-form-field>
+                      <button type="submit" [disabled]="!myForm.valid" (click)="viewByAssociateId()" mat-raised-button>Search Associate</button>
+                      <br>
+                      <div class="invalid"  *ngIf="errorFlag" style="color: red; font-size: 12px;">
+                        Invalid Associate ID.
+                    </div>
+                    </form>
+                      <table *ngIf="show && !errorFlag" class="table table-hover" style="justify-content: center;">
+                        <thead>
+                          <tr>
+                            <th>Associate Id </th>
+                            <th>Associate Name</th>
+                            <th>Associate EmailId</th>
+                            <th>Address</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let associate of associatesById">
+                            <td>{{associate.associateId | titlecase}}</td>
+                            <td>{{associate.associateName | uppercase}}</td>
+                            <td>{{associate.associateEmailId }}</td>
+                            <td>{{associate.associateAddress}}</td>
+                        </tr>
+                        </tbody>
+                        
+                    </table>
+                    
+                 </div>
+
+                 <div *ngIf="paramFlag===4" class="content" >
+                  <div>
+                    <button (click)="viewAssociates()" mat-raised-button>View All Associate</button>
+                </div>
+                <br>
+                      <table class="table table-hover" style="justify-content: center;">
+                        <thead>
+                          <tr>
+                            <th>Associate Id </th>
+                            <th>Associate Name</th>
+                            <th>Associate EmailId</th>
+                            <th>Address</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let associate of associatesById">
+                            <td>{{associate.associateId | titlecase}}</td>
+                            <td>{{associate.associateName | uppercase}}</td>
+                            <td>{{associate.associateEmailId }}</td>
+                            <td>{{associate.associateAddress}}</td>
+                        </tr>
+                        </tbody>
+                        
+                    </table>
+                 </div>
+
+            </mat-card-content>
+        </mat-card>  
+    </mat-sidenav-content>
+</mat-sidenav-container>
+

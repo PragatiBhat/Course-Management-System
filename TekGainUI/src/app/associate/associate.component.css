@@ -1,0 +1,49 @@
+.mat-card {
+    /* background: rgb(130, 130, 133); */
+    height:700px;
+    /* color: rgb(116, 110, 110); */
+}
+table{
+    margin-left:100px;
+    margin-right: 100px;
+    text-align: center;
+}
+.content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+  
+}
+.toolbar{
+    /* background-color: #138D75 ; */
+    background-color: mediumseagreen;
+    border-bottom: 2px black;
+    justify-content: right;
+  }
+
+.navlist{
+    background-color: #138D75;
+}
+
+.btn-text-right{
+    text-align: right;
+}
+
+.p{
+    background-color: mediumseagreen;
+}
+.bar{
+    background-color: rgb(4, 39, 77);
+    display: block;
+    padding-top: 15px;
+}
+.signoutb{
+    
+    /* right: -1500%; */
+    float: right;
+    /* display: flex;
+    justify-content: flex-end; */
+    
+}

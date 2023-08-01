@@ -1,0 +1,22 @@
+<!--Fill the code -->
+<mat-toolbar class="bar">
+  <span>TekGain</span>
+</mat-toolbar>
+<div class="login" *ngIf="status1">
+<h1 class="heading1">Login</h1>
+<form *ngIf="!isLoggedIn">
+    <div>
+      <label for="username">User Name</label>
+      <input type="text" id="userName" name="username" placeholder="Username" [(ngModel)]="user.username" #username="ngModel" required>
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input type="password" id="Password" name="password" placeholder="Password" [(ngModel)]="user.password" #password="ngModel" required>
+    </div>
+    <div class="button">
+      <button mat-raised-button type="submit" id="login" (click)="onClickSubmit()"><span class="text">Sign in</span></button>
+    </div>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  </form>
+
+</div>

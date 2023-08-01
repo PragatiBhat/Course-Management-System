@@ -1,0 +1,41 @@
+.bar{
+    background-color: rgb(4, 39, 77);
+    display: block;
+    padding-top: 15px;
+}
+.signoutb{
+    
+    /* right: -1500%; */
+    float: right;
+    /* display: flex;
+    justify-content: flex-end; */
+    
+}
+.toolbar{
+    /* background-color: #138D75 ; */
+    background-color: mediumseagreen;
+    border-bottom: 2px black;
+    justify-content: right;
+  }
+
+.navlist{
+    background-color: #138D75;
+}
+
+.btn-text-right{
+    text-align: right;
+}
+
+.p{
+    background-color: mediumseagreen;
+}
+.payment{
+        font-size: 70px;
+        font-weight: 600;
+        background-image: linear-gradient(to left, white,black);
+        color: black;
+        background-clip: text;
+        -webkit-background-clip: text;
+        text-align: center;
+        margin-top: 150px;
+}

@@ -1,0 +1,31 @@
+.toolbar{
+    /* background-color: #138D75 ; */
+    background-color: mediumseagreen;
+    border-bottom: 2px black;
+    justify-content: right;
+  }
+
+.navlist{
+    background-color: mediumseagreen;
+}
+
+.btn-text-right{
+    text-align: right;
+}
+
+.p{
+    background-color: mediumseagreen;
+}
+.bar{
+    background-color: rgb(4, 39, 77);
+    display: block;
+    padding-top: 15px;
+}
+.signoutb{
+    
+    /* right: -1500%; */
+    float: right;
+    /* display: flex;
+    justify-content: flex-end; */
+    
+}

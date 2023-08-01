@@ -1,0 +1,342 @@
+<mat-toolbar class="bar">
+  <span>TekGain</span>
+  <div class="signoutb">
+    <button mat-raised-button color="#000000" (click)="logout()">Signout</button>
+  </div>
+</mat-toolbar>
+<mat-toolbar class="toolbar">
+  <div class="d-grid gap-2 d-md-flex justify-content-end  btn-text-light ">
+    <a routerLink="/course" mat-raised-button class="btn btn-light" type="button" float="right">Course</a>
+    <a routerLink="/admission" mat-raised-button class="btn btn-light" type="button" float="right">Admission</a>
+    <a routerLink="/associate" mat-raised-button class="btn btn-light" type="button" float="right">Associate</a>
+  </div>
+</mat-toolbar>
+<mat-sidenav-container>
+    <mat-sidenav opened class="navlist" mode="side">
+        <mat-nav-list>
+            <a *ngIf="add" [routerLink]="['/course']" [queryParams]="{paramFlag:1}" mat-list-item>Add Course</a>
+            <a *ngIf="update" [routerLink]="['/course']" [queryParams]="{paramFlag:2}"mat-list-item>Update Course</a>
+            <a *ngIf="view" [routerLink]="['/course']" [queryParams]="{paramFlag:3}"mat-list-item>View Course By Id</a>
+            <a *ngIf="showrating" [routerLink]="['/course']" [queryParams]="{paramFlag:4}"mat-list-item>Ratings</a>
+            <a *ngIf="deactivate" [routerLink]="['/course']" [queryParams]="{paramFlag:5}"mat-list-item>Deactivate Course</a>
+            <a *ngIf="viewAll" [routerLink]="['/course']" [queryParams]="{paramFlag:6}"mat-list-item>View All Course</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-card>
+            <h1 style="color: white;">Course Management</h1>
+            <mat-card-content>
+              <div *ngIf="paramFlag===1">
+                    <form #myForm="ngForm" class="content">
+                      <h2 >Add Course</h2>
+                      <mat-form-field class="full-width" appearance="fill" color="accent">
+                        <mat-label>Course Name</mat-label>
+                        <input
+                          type="text"
+                          id="courseName"
+                          name="courseName"
+                          value="Course Name"
+                          [(ngModel)]="courseName"
+                          required
+                          pattern="[A-Za-z\s]+"
+                          #coursename="ngModel"
+                          [ngClass]="{'is-invalid': coursename.touched && coursename.errors}"
+                          matInput
+                        />
+                        <small *ngIf="coursename.touched && coursename.errors && coursename.errors['required']" class="text-accent">
+                          *Course Name is required
+                        </small>
+                        <small *ngIf="coursename.touched && coursename.errors?.pattern" class="text-accent">
+                          *Course Name must contain only letters (no digits or special characters allowed)
+                        </small>
+                      </mat-form-field>
+                      <!-- <mat-form-field color="accent" appearance = "fill">  
+                        <mat-label>Course Name </mat-label>  
+                        <input matInput required [(ngModel)]="courseName">  
+                      </mat-form-field> -->
+                      <mat-form-field color="accent" appearance = "fill">  
+                        <mat-label>Fees</mat-label>  
+                        <input
+                          type="number"
+                          id="fees"
+                          name="fees"
+                          value="Fees"
+                          [(ngModel)]="fees"
+                          required
+                          min="0"
+                          #Fees="ngModel"
+                          [ngClass]="{'is-invalid': Fees.touched && Fees.errors}"
+                          matInput
+                        />
+                        <small *ngIf="Fees.touched && Fees.errors && Fees.errors['required']" class="text-accent">
+                          *Fees is required
+                        </small>
+                        <small *ngIf="Fees.touched && Fees.errors?.min" class="text-accent">
+                          *Fees cannot be negative
+                        </small>
+                      </mat-form-field> 
+                      <mat-form-field color="accent" appearance = "fill">  
+                        <mat-label>Duration in months </mat-label>  
+                        <input
+                          type="number"
+                          id="duration"
+                          name="duration"
+                          value="duration"
+                          [(ngModel)]="duration"
+                          required
+                          min="0"
+                          #Duration="ngModel"
+                          [ngClass]="{'is-invalid': Duration.touched && Duration.errors}"
+                          matInput
+                        />
+                        <small *ngIf="Duration.touched && Duration.errors && Duration.errors['required']" class="text-accent">
+                          *Duration is required
+                        </small>  
+                        <small *ngIf="Duration.touched && Duration.errors?.min" class="text-accent">
+                          *Duration cannot be negative
+                        </small>
+                      </mat-form-field>
+                      <mat-form-field color="accent" appearance = "fill">  
+                        <mat-label>Course Type</mat-label>  
+                        <input
+                          type="text"
+                          id="courseType"
+                          name="courseType"
+                          value="courseType"
+                          [(ngModel)]="courseType"
+                          required
+                          pattern="[A-Za-z\s]+"
+                          #coursetype="ngModel"
+                          [ngClass]="{'is-invalid': coursetype.touched && coursetype.errors}"
+                          matInput
+                        />
+                        <small *ngIf="coursetype.touched && coursetype.errors && coursetype.errors['required']" class="text-accent">
+                          *Course Type is required
+                        </small>  
+                        <small *ngIf="coursetype.touched && coursetype.errors?.pattern" class="text-accent">
+                          *CourseType must contain only letters (no digits or special characters allowed)
+                        </small>
+                      </mat-form-field>
+                      <button type="submit" [disabled]="!myForm.valid" (click)="addCourse()" mat-raised-button>Add Course</button>
+                    </form>
+                    </div>
+                 <div *ngIf="paramFlag===2" >
+                  <form #myForm="ngForm" class="content">
+                    <h2>Update Course Fee</h2>
+                     <mat-form-field color="accent" appearance = "fill">  
+                        <mat-label>Course Id </mat-label>  
+                        <input
+                          type="text"
+                          id="courseId"
+                          name="courseId"
+                          value="courseId"
+                          [(ngModel)]="courseId"
+                          required
+                          #CourseId="ngModel"
+                          [ngClass]="{'is-invalid': CourseId.touched && CourseId.errors}"
+                          matInput
+                        />
+                        <small *ngIf="CourseId.touched && CourseId.errors && CourseId.errors['required']" class="text-accent">
+                          *CourseId is required
+                        </small>  
+                      </mat-form-field>
+                      <mat-form-field color="accent" appearance = "fill">  
+                        <mat-label>Fees </mat-label>  
+                        <input
+                        type="number"
+                        id="fees"
+                        name="fees"
+                        value="fees"
+                        [(ngModel)]="fees"
+                        required
+                        min="0"
+                        #Fees="ngModel"
+                        [ngClass]="{'is-invalid': Fees.touched && Fees.errors}"
+                        matInput
+                      />
+                      <small *ngIf="Fees.touched && Fees.errors && Fees.errors['required']" class="text-accent">
+                        *Fees is required
+                      </small>  
+                      <small *ngIf="Fees.touched && Fees.errors?.min" class="text-accent">
+                        *Fees cannot be negative
+                      </small>
+                      </mat-form-field>
+                      <button type="submit" [disabled]="!myForm.valid" (click)="updateCourse()" mat-raised-button>Update Course</button>
+                      <br>
+                      <h2 *ngIf="flag2==1">{{message}}</h2>
+                    </form>
+                 </div>
+                 <div *ngIf="paramFlag===3" class="content">
+                  <form #myForm="ngForm" class="content">
+                    <h2>View Course detailes By Id</h2>
+                     <mat-form-field color="accent" appearance = "fill">  
+                        <mat-label>Course Id </mat-label>  
+                        <input
+                        type="text"
+                        id="courseId"
+                        name="courseId"
+                        value="courseId"
+                        [(ngModel)]="courseId"
+                        required
+                        #CourseId="ngModel"
+                        [ngClass]="{'is-invalid': CourseId.touched && CourseId.errors}"
+                        matInput
+                      />
+                      <small *ngIf="CourseId.touched && CourseId.errors && CourseId.errors['required']" class="text-accent">
+                        *Course Id is required
+                      </small>  
+                      </mat-form-field>
+                      <!-- <h4>native html select</h4>
+                      <mat-form-field>
+                        <mat-label>Select your car</mat-label>
+                        <select matNativeControl id="mySelectId">
+                          <option value="" disabled selected></option>
+                          <option value="volvo">Volvo</option>
+                          <option value="saab">Saab</option>
+                          <option value="mercedes">Mercedes</option>
+                          <option value="audi">Audi</option>
+                        </select>
+                      </mat-form-field> -->
+                      <button type="submit" [disabled]="!myForm.valid" (click)="viewCourseById()" mat-raised-button>Search Course</button>
+                      <br>
+                      </form>
+                      <table class="table table-hover" style="justify-content: center;">
+                        <thead>
+                          <tr>
+                            <th>Course Id </th>
+                            <th>Course Name</th>
+                            <th>Fees</th>
+                            <th>Duration</th>
+                            <th>Course Type</th>
+                            <th>Ratings</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let course of courseById">
+                            <td>{{course.courseId | titlecase}}</td>
+                            <td>{{course.courseName | titlecase}}</td>
+                            <td>{{course.fees }}</td>
+                            <td>{{course.duration}}</td>
+                            <td>{{course.courseType}}</td>
+                            <td>{{course.rating }}</td>
+                            
+                        </tr> 
+                        </tbody>
+                        
+                    </table>
+                    <div class="invalid" *ngIf="errorFlag">
+                      Invalid Course ID.
+                    </div>
+                 </div>
+                 <div *ngIf="paramFlag===4" class="content">
+                  <form #myForm="ngForm" class="content">
+                    <h2>Course Feedback Ratings</h2>
+                     <mat-form-field color="accent" appearance = "fill">  
+                        <mat-label>Course Id </mat-label>  
+                        <input
+                        type="text"
+                        id="courseId"
+                        name="courseId"
+                        value="courseId"
+                        [(ngModel)]="courseId"
+                        required
+                        #CourseId="ngModel"
+                        [ngClass]="{'is-invalid': CourseId.touched && CourseId.errors}"
+                        matInput
+                      />
+                      <small *ngIf="CourseId.touched && CourseId.errors && CourseId.errors['required']" class="text-accent">
+                        *Course Id is required
+                      </small>   
+                      </mat-form-field>
+                      <button type="submit" [disabled]="!myForm.valid" (click)="viewRatings()" mat-raised-button>Search Course</button>
+                      <br>
+                      </form>
+                      <table class="table table-hover" style="justify-content: center;">
+                        <thead>
+                          <tr>
+                            <th>Course Id </th>
+                            <th>Course Name</th>
+                            <th>Fees</th>
+                            <th>Duration</th>
+                            <th>Course Type</th>
+                            <th>Ratings</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let course of ratings">
+                            <td>{{course.courseId | titlecase}}</td>
+                            <td>{{course.courseName | titlecase}}</td>
+                            <td>{{course.fees }}</td>
+                            <td>{{course.duration}}</td>
+                            <td>{{course.courseType}}</td>
+                            <td>{{course.rating }}</td>
+                        </tr> 
+                        </tbody>
+                        
+                    </table>
+                    <div class="invalid" *ngIf="errorFlag">
+                      Invalid Course ID.
+                    </div>
+                 </div>
+                 <div *ngIf="paramFlag===5" class="content">
+                  <form #myForm="ngForm" class="content">
+                    <h2>Disable Course</h2>
+                     <mat-form-field color="accent" appearance = "fill">  
+                        <mat-label>Course Id </mat-label>  
+                        <input
+                        type="text"
+                        id="courseId"
+                        name="courseId"
+                        value="courseId"
+                        [(ngModel)]="courseId"
+                        required
+                        #CourseId="ngModel"
+                        [ngClass]="{'is-invalid': CourseId.touched && CourseId.errors}"
+                        matInput
+                      />
+                      <small *ngIf="CourseId.touched && CourseId.errors && CourseId.errors['required']" class="text-accent">
+                        *Course Id is required
+                      </small>   
+                      </mat-form-field>
+                      <button type="submit" [disabled]="!myForm.valid" (click)="disableCourse()" mat-raised-button>Disable Course</button>
+                    </form>
+                    <div class="invalid" *ngIf="errorFlag">
+                      <h2>Invalid Course ID.</h2>
+                    </div>
+                    <h2 *ngIf="flag1==1">Course Disabled Successfully</h2>
+                 </div>
+                 <div *ngIf="paramFlag===6" class="content">
+                  <div>
+                    <button (click)="viewAllCourses()" mat-raised-button>View All Course</button>
+                </div>
+                <br>
+                <table class="table table-hover" style="justify-content: center;">
+                  <thead>
+                    <tr>
+                      <th>Course Id </th>
+                      <th>Course Name</th>
+                      <th>Fees</th>
+                      <th>Duration</th>
+                      <th>Course Type</th>
+                      <th>Ratings</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let course of courses">
+                      <td>{{course.courseId }}</td>
+                      <td>{{course.courseName | titlecase}}</td>
+                      <td>{{course.fees }}</td>
+                      <td>{{course.duration}}</td>
+                      <td>{{course.courseType}}</td>
+                      <td>{{course.rating }}</td>
+                  </tr> 
+                  </tbody>
+                  
+              </table>
+                 </div>
+            </mat-card-content>
+        </mat-card>
+        
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
